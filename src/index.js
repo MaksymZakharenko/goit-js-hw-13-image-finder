@@ -16,6 +16,7 @@ const refs = {
   formInput: document.querySelector('.search-form'),
   result: document.querySelector('.result'),
   error: document.querySelector('.error'),
+  pchel: document.querySelector('.pchel'),
 };
 
 refs.formInput.addEventListener('submit', getUsers);
@@ -27,6 +28,7 @@ function fetchPic() {
     .then(data => {
       renderItems(data);
       loadMoreBtn.enable();
+      refs.pchel.classList.add("is-hidden")
     })
     .catch(err => {
       renderError(err);
@@ -44,7 +46,7 @@ function getNextPage(e) {
 function getUsers(e) {
   e.preventDefault();
   apiServise.query = e.currentTarget.elements.query.value;
-   if (!apiServise.query.trim()) {
+  if (!apiServise.query.trim()) {
     return alert('Please Enter Search Query');
   }
   apiServise.resetPage();
@@ -66,11 +68,19 @@ function renderError(err) {
 }
 
 document.addEventListener('click', event => {
-  if (event.target.tagName !== 'IMG') return;
+  let instance = '';
+  if (event.target.className === 'pchel') {
+    instance = basicLightbox.create(`
+  <img src=" http://localhost:1234/images/glaza-shershnya.jpg" alt="${event.target.alt}" />;
+  `);
+    instance.show();
+  } else if (event.target.tagName === 'IMG') {
+    console.log(event.target.tagName);
+    instance = basicLightbox.create(`
+  <img src="${event.target.dataset.big}" alt="${event.target.alt}" />;
+  `);
+    instance.show();
+  }
 
-  const instance = basicLightbox.create(`
-    <img src='${event.target.dataset.big}' alt='${event.target.alt}' />
-`);
-  console.log(instance);
-  instance.show();
 });
+

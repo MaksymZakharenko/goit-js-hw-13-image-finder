@@ -4,7 +4,7 @@ export default class LoadMoreBtn {
 
     hidden && this.hide();
   }
-
+  
   getRefs(selector) {
     const refs = {};
     refs.button = document.querySelector(selector);
@@ -12,6 +12,8 @@ export default class LoadMoreBtn {
     refs.spinner = refs.button.querySelector('.spinner-grow');
     return refs;
   }
+  
+
 
   enable() {
     this.refs.button.disabled = false;
@@ -27,6 +29,7 @@ export default class LoadMoreBtn {
 
   show() {
     this.refs.button.classList.remove('is-hidden');
+    
   }
 
   hide() {
